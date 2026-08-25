@@ -1,0 +1,324 @@
+/* ==========================================
+   NEXORA AI - VERIFY OTP
+========================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+:root {
+  --primary: #667eea;
+  --primary-dark: #5568d9;
+  --accent: #764ba2;
+
+  --text: #111827;
+  --text-light: #6b7280;
+
+  --bg: #f6f7fb;
+  --white: #ffffff;
+
+  --border: #e5e7eb;
+  --input-bg: #f9fafb;
+
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+
+  --radius: 22px;
+}
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  font-family: "Inter", Arial, sans-serif;
+}
+
+/* ==========================================
+   OTP CONTAINER
+========================================== */
+
+.container {
+  width: 100%;
+  max-width: 440px;
+
+  padding: 42px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 13px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-size: 23px;
+}
+
+/* ==========================================
+   HEADING
+========================================== */
+
+.container h1 {
+  margin-bottom: 10px;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  color: var(--text);
+}
+
+/* ==========================================
+   DESCRIPTION
+========================================== */
+
+.container p {
+  margin-bottom: 28px;
+
+  color: var(--text-light);
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+/* ==========================================
+   OTP INPUT
+========================================== */
+
+.container input {
+  width: 100%;
+  height: 54px;
+
+  padding: 0 16px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: var(--input-bg);
+
+  color: var(--text);
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  text-align: center;
+
+  letter-spacing: 8px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.container input:focus {
+  border-color: var(--primary);
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.container input::placeholder {
+  color: #9ca3af;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  letter-spacing: normal;
+}
+
+/* ==========================================
+   VERIFY BUTTON
+========================================== */
+
+.container button {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: var(--gradient);
+
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.container button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.32);
+}
+
+.container button:active {
+  transform: translateY(0);
+
+  box-shadow: 0 6px 14px rgba(102, 126, 234, 0.2);
+}
+
+/* ==========================================
+   OTP TIMER
+========================================== */
+
+.otp-timer {
+  margin-top: 18px;
+
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+.otp-timer span {
+  color: var(--primary);
+
+  font-weight: 700;
+}
+
+/* ==========================================
+   RESEND
+========================================== */
+
+.resend {
+  display: inline-block;
+
+  margin-top: 18px;
+
+  color: var(--primary);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.resend:hover {
+  color: var(--accent);
+
+  text-decoration: underline;
+}
+
+/* ==========================================
+   BACK TO LOGIN
+========================================== */
+
+.back-login {
+  display: block;
+
+  margin-top: 24px;
+
+  color: var(--text-light);
+
+  font-size: 13px;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.back-login:hover {
+  color: var(--text);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 500px) {
+  body {
+    padding: 15px;
+  }
+
+  .container {
+    padding: 32px 24px;
+
+    border-radius: 18px;
+  }
+
+  .container h1 {
+    font-size: 26px;
+  }
+
+  .container input {
+    height: 52px;
+
+    font-size: 18px;
+
+    letter-spacing: 6px;
+  }
+}

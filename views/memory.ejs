@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory - Nexora AI</title>
+
+    <link rel="stylesheet" href="/css/memory.css">
+
+</head>
+
+
+<body>
+
+    <div class="app">
+
+
+        <!-- ========================================== -->
+        <!-- SIDEBAR -->
+        <!-- ========================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <div class="logo">
+                    ✦
+                </div>
+
+                <h1>
+                    Nexora
+                </h1>
+
+            </div>
+
+
+            <a href="/chat" class="back-chat-btn">
+                ← Back to Chat
+            </a>
+
+
+            <div class="memory-info">
+
+                <h3>
+                    Memory
+                </h3>
+
+                <p>
+                    Nexora can remember useful
+                    information about you to make
+                    future conversations more personal.
+                </p>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="/logout" class="logout-btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- ========================================== -->
+        <!-- MAIN -->
+        <!-- ========================================== -->
+
+        <main class="memory-container">
+
+
+            <!-- ========================================== -->
+            <!-- HEADER -->
+            <!-- ========================================== -->
+
+            <header class="memory-header">
+
+                <div>
+
+                    <h2>
+                        Memory
+                    </h2>
+
+                    <p>
+                        Manage what Nexora remembers about you.
+                    </p>
+
+                </div>
+
+
+                <button id="addMemoryBtn" class="add-memory-btn" type="button">
+                    + Add Memory
+                </button>
+
+            </header>
+
+
+
+            <!-- ========================================== -->
+            <!-- CONTENT -->
+            <!-- ========================================== -->
+
+            <section class="memory-content">
+
+
+                <div class="memory-title">
+
+                    <div>
+
+                        <h3>
+                            Saved Memories
+                        </h3>
+
+                        <p>
+                            Information Nexora can use
+                            in future conversations.
+                        </p>
+
+                    </div>
+
+
+                    <span id="memoryCount">
+
+                        <%= memories.length %>
+
+                            <%= memories.length===1 ? "memory" : "memories" %>
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- ========================================== -->
+                <!-- MEMORY LIST -->
+                <!-- ========================================== -->
+
+                <div id="memoryList" class="memory-list">
+
+                    <% if (memories.length===0) { %>
+
+                        <div class="empty-memory">
+
+                            <div class="empty-icon">
+                                ✦
+                            </div>
+
+                            <h3>
+                                No memories yet
+                            </h3>
+
+                            <p>
+                                As you chat with Nexora,
+                                useful information about you
+                                will appear here.
+                            </p>
+
+                        </div>
+
+
+                        <% } else { %>
+
+
+                            <% memories.forEach(memory=> { %>
+
+                                <div class="memory-card" data-id="<%= memory._id %>">
+
+                                    <div class="memory-details">
+
+                                        <span class="memory-key">
+                                            <%= memory.key %>
+                                        </span>
+
+                                        <div class="memory-value">
+                                            <%= memory.value %>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="memory-actions">
+
+                                        <button type="button" class="memory-action"
+                                            onclick="editMemory('<%= memory._id %>')">
+                                            Edit
+                                        </button>
+
+
+                                        <button type="button" class="memory-action delete"
+                                            onclick="deleteMemory('<%= memory._id %>')">
+                                            Delete
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                                <% }) %>
+
+
+                                    <% } %>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ========================================== -->
+    <!-- ADD / EDIT MODAL -->
+    <!-- ========================================== -->
+
+    <div id="memoryModal" class="modal hidden">
+
+        <div class="modal-card">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3 id="modalTitle">
+                        Add Memory
+                    </h3>
+
+                    <p>
+                        Add information Nexora should remember.
+                    </p>
+
+                </div>
+
+
+                <button id="closeModalBtn" class="close-btn" type="button">
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="memoryForm">
+
+                <input type="hidden" id="memoryId">
+
+
+                <label for="memoryKey">
+                    Key
+                </label>
+
+                <input type="text" id="memoryKey" placeholder="Example: name" required>
+
+
+                <label for="memoryValue">
+                    Value
+                </label>
+
+                <textarea id="memoryValue" placeholder="Example: Sagar" rows="4" required></textarea>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="modal-actions">
+
+                    <button type="button" id="cancelBtn" class="cancel-btn">
+                        Cancel
+                    </button>
+
+
+                    <button type="submit" class="save-btn">
+                        Save Memory
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+
+    <script src="/js/memory.js"></script>
+
+</body>
+
+</html>

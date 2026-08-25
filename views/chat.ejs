@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nexora AI</title>
+
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+                <div class="logo">
+                    ✦
+                </div>
+
+                <h1>Nexora</h1>
+            </div>
+
+            <button id="newChatBtn" class="new-chat-btn">
+                + New Chat
+            </button>
+
+            <div class="chat-history">
+
+                <h3>Recent Chats</h3>
+
+                <div id="chatHistoryList">
+                    <!-- Chats will be added by JavaScript -->
+                </div>
+
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="/memory" class="memory-btn">
+                    🧠 Memory
+                </a>
+
+                <button id="clearChatBtn" class="clear-chat-btn">
+                    🗑 Clear Chat
+                </button>
+
+                <a href="/logout" class="logout-btn">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CHAT ================= -->
+        <main class="chat-container">
+
+            <!-- HEADER -->
+            <header class="chat-header">
+
+                <div class="assistant-info">
+
+                    <div class="assistant-avatar">
+                        ✦
+                    </div>
+
+                    <div>
+                        <h2>Nexora AI</h2>
+
+                        <span class="status">
+                            <span class="status-dot"></span>
+                            Online
+                        </span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= CHAT BOX ================= -->
+            <section id="chatBox" class="chat-box">
+
+                <!-- Welcome -->
+                <div class="welcome">
+
+                    <div class="welcome-icon">
+                        ✦
+                    </div>
+
+                    <h2>
+                        Welcome to Nexora AI
+                    </h2>
+
+                    <p>
+                        Ask me anything. I'm here to help you learn,
+                        code, brainstorm, and explore ideas.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= INPUT ================= -->
+            <div class="input-area">
+
+                <div class="input-wrapper">
+
+                    <textarea id="messageInput" placeholder="Message Nexora..." rows="1"></textarea>
+
+                    <button id="sendBtn" type="button" class="send-btn">
+                        ➤
+                    </button>
+
+                </div>
+
+                <p class="input-note">
+                    Nexora can make mistakes. Check important information.
+                </p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= MARKED ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- ================= CHAT JS ================= -->
+    <script src="/js/chat.js"></script>
+
+</body>
+
+</html>

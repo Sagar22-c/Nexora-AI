@@ -1,0 +1,687 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: #f7f8fc;
+  color: #171717;
+  height: 100vh;
+  overflow: hidden;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+  width: 270px;
+  height: 100vh;
+
+  background: #ffffff;
+  border-right: 1px solid #e8e8ee;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px 15px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 5px 8px 20px;
+}
+
+.logo {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 20px;
+}
+
+.sidebar-header h1 {
+  font-size: 20px;
+}
+
+/* =========================================================
+   BACK TO CHAT
+========================================================= */
+
+.back-chat-btn {
+  width: 100%;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #111827;
+  color: white;
+
+  text-decoration: none;
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.back-chat-btn:hover {
+  background: #252b38;
+}
+
+/* =========================================================
+   MEMORY INFO
+========================================================= */
+
+.memory-info {
+  margin-top: 30px;
+  padding: 8px;
+}
+
+.memory-info h3 {
+  margin-bottom: 10px;
+
+  font-size: 12px;
+  color: #8a8f9c;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.memory-info p {
+  color: #737985;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+.logout-btn {
+  display: block;
+
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 8px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #f4f4f6;
+  color: #111827;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.memory-container {
+  flex: 1;
+
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.memory-header {
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 45px;
+
+  background: white;
+
+  border-bottom: 1px solid #e8e8ee;
+}
+
+.memory-header h2 {
+  font-size: 20px;
+}
+
+.memory-header p {
+  margin-top: 4px;
+
+  color: #737985;
+
+  font-size: 12px;
+}
+
+.add-memory-btn {
+  border: none;
+
+  padding: 11px 16px;
+
+  border-radius: 9px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.add-memory-btn:hover {
+  background: #252b38;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.memory-content {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 35px 7%;
+}
+
+.memory-title {
+  max-width: 900px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.memory-title h3 {
+  font-size: 17px;
+}
+
+.memory-title p {
+  margin-top: 5px;
+
+  color: #737985;
+
+  font-size: 12px;
+}
+
+#memoryCount {
+  color: #8a8f9c;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   MEMORY LIST
+========================================================= */
+
+.memory-list {
+  max-width: 900px;
+
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.memory-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px 20px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  transition: 0.2s;
+}
+
+.memory-card:hover {
+  border-color: #d1d5db;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+.memory-details {
+  min-width: 0;
+}
+
+.memory-key {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+.memory-value {
+  color: #24262b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.memory-actions {
+  display: flex;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+}
+
+.memory-action {
+  border: none;
+
+  padding: 7px 10px;
+
+  border-radius: 7px;
+
+  background: #f1f2f6;
+
+  color: #555b67;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.memory-action:hover {
+  background: #e5e7eb;
+
+  color: #111827;
+}
+
+.memory-action.delete:hover {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-memory {
+  padding: 70px 20px;
+
+  text-align: center;
+
+  background: white;
+
+  border: 1px dashed #d7d9df;
+
+  border-radius: 12px;
+}
+
+.empty-icon {
+  width: 50px;
+  height: 50px;
+
+  margin: 0 auto 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 22px;
+}
+
+.empty-memory h3 {
+  margin-bottom: 7px;
+
+  font-size: 16px;
+}
+
+.empty-memory p {
+  color: #737985;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+  padding: 50px;
+
+  text-align: center;
+
+  color: #8a8f9c;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(17, 24, 39, 0.35);
+
+  z-index: 100;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 24px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+.modal-header h3 {
+  font-size: 17px;
+}
+
+.modal-header p {
+  margin-top: 5px;
+
+  color: #737985;
+
+  font-size: 12px;
+}
+
+.close-btn {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #f1f2f6;
+
+  color: #555b67;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #e5e7eb;
+}
+
+#memoryForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#memoryForm label {
+  margin-bottom: 7px;
+
+  color: #555b67;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#memoryForm input,
+#memoryForm textarea {
+  width: 100%;
+
+  margin-bottom: 17px;
+
+  padding: 11px 12px;
+
+  border: 1px solid #dedfe5;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 13px;
+
+  color: #111827;
+
+  background: white;
+}
+
+#memoryForm input:focus,
+#memoryForm textarea:focus {
+  border-color: #9ca3af;
+}
+
+#memoryForm textarea {
+  resize: vertical;
+
+  min-height: 90px;
+}
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.modal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 5px;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 10px 15px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #f1f2f6;
+
+  color: #555b67;
+}
+
+.cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.save-btn {
+  background: #111827;
+
+  color: white;
+}
+
+.save-btn:hover {
+  background: #252b38;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .memory-header {
+    padding: 0 20px;
+  }
+
+  .memory-content {
+    padding: 25px 20px;
+  }
+
+  .memory-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .memory-actions {
+    width: 100%;
+  }
+
+  .memory-action {
+    flex: 1;
+  }
+}
+
+@media (max-width: 550px) {
+  .sidebar {
+    display: none;
+  }
+
+  .memory-header {
+    height: auto;
+
+    padding: 20px;
+
+    gap: 15px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .add-memory-btn {
+    width: 100%;
+  }
+
+  .memory-title {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .memory-content {
+    padding: 20px 15px;
+  }
+}

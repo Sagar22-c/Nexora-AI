@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP</title>
+
+    <link rel="stylesheet" href="/css/verifyOTP.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Verify OTP</h1>
+
+        <p>Enter the OTP sent to your email.</p>
+
+        <form action="/verifyOTP" method="POST">
+
+            <input type="text" name="otp" maxlength="6" placeholder="Enter OTP" required>
+
+            <button type="submit">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <p class="otp-timer">
+            OTP expires in <span id="timer">05:00</span>
+        </p>
+
+        <a href="/sendOTP" class="resend">
+            Resend OTP
+        </a>
+
+    </div>
+
+
+    <script>
+        let timeLeft = 2 * 60;
+
+        const timer = document.getElementById("timer");
+
+        const countdown = setInterval(() => {
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            timer.textContent =
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0");
+
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+
+                timer.textContent = "Expired";
+                timer.style.color = "#dc2626";
+            }
+
+        }, 1000);
+    </script>
+
+</body>
+
+</html>
