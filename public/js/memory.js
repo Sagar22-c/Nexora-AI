@@ -18,44 +18,38 @@ const memoryId = document.getElementById("memoryId");
 const memoryKey = document.getElementById("memoryKey");
 const memoryValue = document.getElementById("memoryValue");
 
-
 // ==========================================
 // MEMORIES
 // ==========================================
 
 let memories = [];
 
-
 // ==========================================
 // LOAD MEMORIES FROM HTML
 // ==========================================
 
 function loadMemoriesFromHTML() {
+  const cards = document.querySelectorAll(".memory-card");
 
-    const cards = document.querySelectorAll(".memory-card");
+  memories = [];
 
-    memories = [];
+  cards.forEach((card) => {
+    const id = card.dataset.id;
 
-    cards.forEach((card) => {
+    const keyElement = card.querySelector(".memory-key");
+    const valueElement = card.querySelector(".memory-value");
 
-        const id = card.dataset.id;
+    if (!id || !keyElement || !valueElement) {
+      return;
+    }
 
-        const keyElement = card.querySelector(".memory-key");
-        const valueElement = card.querySelector(".memory-value");
-
-        if (!id || !keyElement || !valueElement) {
-            return;
-        }
-
-        memories.push({
-            _id: id,
-            key: keyElement.textContent.trim(),
-            value: valueElement.textContent.trim(),
-        });
-
+    memories.push({
+      _id: id,
+      key: keyElement.textContent.trim(),
+      value: valueElement.textContent.trim(),
     });
+  });
 }
-
 
 // ==========================================
 // INITIAL LOAD
@@ -63,25 +57,21 @@ function loadMemoriesFromHTML() {
 
 loadMemoriesFromHTML();
 
-
 // ==========================================
 // ADD MEMORY MODAL
 // ==========================================
 
 addMemoryBtn.addEventListener("click", () => {
+  modalTitle.textContent = "Add Memory";
 
-    modalTitle.textContent = "Add Memory";
+  memoryId.value = "";
+  memoryKey.value = "";
+  memoryValue.value = "";
 
-    memoryId.value = "";
-    memoryKey.value = "";
-    memoryValue.value = "";
+  memoryModal.classList.remove("hidden");
 
-    memoryModal.classList.remove("hidden");
-
-    memoryKey.focus();
-
+  memoryKey.focus();
 });
-
 
 // ==========================================
 // CLOSE MODAL
@@ -91,300 +81,214 @@ closeModalBtn.addEventListener("click", closeModal);
 
 cancelBtn.addEventListener("click", closeModal);
 
-
 function closeModal() {
+  memoryModal.classList.add("hidden");
 
-    memoryModal.classList.add("hidden");
+  memoryForm.reset();
 
-    memoryForm.reset();
-
-    memoryId.value = "";
-
+  memoryId.value = "";
 }
-
 
 // ==========================================
 // ADD / UPDATE MEMORY
 // ==========================================
 
 memoryForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-    event.preventDefault();
+  const key = memoryKey.value.trim();
+  const value = memoryValue.value.trim();
+  const id = memoryId.value;
 
-    const key = memoryKey.value.trim();
-    const value = memoryValue.value.trim();
-    const id = memoryId.value;
+  // Validate
+  if (!key || !value) {
+    alert("Key and value are required.");
 
-    // Validate
-    if (!key || !value) {
+    return;
+  }
 
-        alert("Key and value are required.");
+  try {
+    let response;
 
-        return;
+    // ==========================================
+    // UPDATE
+    // ==========================================
+
+    if (id) {
+      response = await fetch(`/memory/${id}`, {
+        method: "PUT",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          key,
+          value,
+        }),
+      });
     }
 
-    try {
+    // ==========================================
+    // ADD
+    // ==========================================
+    else {
+      response = await fetch("/memory", {
+        method: "POST",
 
-        let response;
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-
-        // ==========================================
-        // UPDATE
-        // ==========================================
-
-        if (id) {
-
-            response = await fetch(`/memory/${id}`, {
-
-                method: "PUT",
-
-                headers: {
-                    "Content-Type": "application/json",
-                },
-
-                body: JSON.stringify({
-                    key,
-                    value,
-                }),
-
-            });
-
-        }
-
-
-        // ==========================================
-        // ADD
-        // ==========================================
-
-        else {
-
-            response = await fetch("/memory", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                },
-
-                body: JSON.stringify({
-                    key,
-                    value,
-                }),
-
-            });
-
-        }
-
-
-        // ==========================================
-        // READ RESPONSE
-        // ==========================================
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-
-            throw new Error(
-                data.message || "Failed to save memory"
-            );
-
-        }
-
-
-        // ==========================================
-        // UPDATE LOCAL ARRAY
-        // ==========================================
-
-        if (id) {
-
-            const index = memories.findIndex(
-                (memory) =>
-                    String(memory._id) === String(id)
-            );
-
-            if (index !== -1) {
-
-                memories[index] = data.memory;
-
-            }
-
-        }
-
-
-        // ==========================================
-        // ADD TO LOCAL ARRAY
-        // ==========================================
-
-        else {
-
-            memories.unshift(data.memory);
-
-        }
-
-
-        // ==========================================
-        // CLOSE MODAL
-        // ==========================================
-
-        closeModal();
-
-
-        // ==========================================
-        // RENDER
-        // ==========================================
-
-        renderMemories();
-
-    } catch (error) {
-
-        console.error("SAVE MEMORY ERROR:", error);
-
-        alert(error.message);
-
+        body: JSON.stringify({
+          key,
+          value,
+        }),
+      });
     }
 
+    // ==========================================
+    // READ RESPONSE
+    // ==========================================
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to save memory");
+    }
+
+    // ==========================================
+    // UPDATE LOCAL ARRAY
+    // ==========================================
+
+    if (id) {
+      const index = memories.findIndex(
+        (memory) => String(memory._id) === String(id),
+      );
+
+      if (index !== -1) {
+        memories[index] = data.memory;
+      }
+    }
+
+    // ==========================================
+    // ADD TO LOCAL ARRAY
+    // ==========================================
+    else {
+      memories.unshift(data.memory);
+    }
+
+    // ==========================================
+    // CLOSE MODAL
+    // ==========================================
+
+    closeModal();
+
+    // ==========================================
+    // RENDER
+    // ==========================================
+
+    renderMemories();
+  } catch (error) {
+    console.error("SAVE MEMORY ERROR:", error);
+
+    alert(error.message);
+  }
 });
-
 
 // ==========================================
 // EDIT MEMORY
 // ==========================================
 
 window.editMemory = function (id) {
+  const memory = memories.find((item) => String(item._id) === String(id));
 
-    const memory = memories.find(
-        (item) =>
-            String(item._id) === String(id)
-    );
+  if (!memory) {
+    console.error("Memory not found:", id);
 
-    if (!memory) {
+    return;
+  }
 
-        console.error("Memory not found:", id);
+  modalTitle.textContent = "Edit Memory";
 
-        return;
-    }
+  memoryId.value = memory._id;
 
+  memoryKey.value = memory.key;
 
-    modalTitle.textContent = "Edit Memory";
+  memoryValue.value = memory.value;
 
-    memoryId.value = memory._id;
+  memoryModal.classList.remove("hidden");
 
-    memoryKey.value = memory.key;
-
-    memoryValue.value = memory.value;
-
-    memoryModal.classList.remove("hidden");
-
-    memoryKey.focus();
-
+  memoryKey.focus();
 };
-
 
 // ==========================================
 // DELETE MEMORY
 // ==========================================
 
 window.deleteMemory = async function (id) {
+  const memory = memories.find((item) => String(item._id) === String(id));
 
-    const memory = memories.find(
-        (item) =>
-            String(item._id) === String(id)
-    );
+  if (!memory) {
+    console.error("Memory not found:", id);
 
-    if (!memory) {
+    return;
+  }
 
-        console.error("Memory not found:", id);
+  const confirmed = confirm(`Delete "${memory.key}" memory?`);
 
-        return;
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`/memory/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to delete memory");
     }
 
+    // ==========================================
+    // REMOVE FROM LOCAL ARRAY
+    // ==========================================
 
-    const confirmed = confirm(
-        `Delete "${memory.key}" memory?`
-    );
+    memories = memories.filter((item) => String(item._id) !== String(id));
 
-    if (!confirmed) {
-        return;
-    }
+    // ==========================================
+    // RENDER
+    // ==========================================
 
+    renderMemories();
+  } catch (error) {
+    console.error("DELETE MEMORY ERROR:", error);
 
-    try {
-
-        const response = await fetch(
-            `/memory/${id}`,
-            {
-                method: "DELETE",
-            }
-        );
-
-
-        const data = await response.json();
-
-
-        if (!response.ok || !data.success) {
-
-            throw new Error(
-                data.message || "Failed to delete memory"
-            );
-
-        }
-
-
-        // ==========================================
-        // REMOVE FROM LOCAL ARRAY
-        // ==========================================
-
-        memories = memories.filter(
-            (item) =>
-                String(item._id) !== String(id)
-        );
-
-
-        // ==========================================
-        // RENDER
-        // ==========================================
-
-        renderMemories();
-
-    } catch (error) {
-
-        console.error(
-            "DELETE MEMORY ERROR:",
-            error
-        );
-
-        alert(error.message);
-
-    }
-
+    alert(error.message);
+  }
 };
-
 
 // ==========================================
 // RENDER MEMORIES
 // ==========================================
 
 function renderMemories() {
+  // ==========================================
+  // UPDATE COUNT
+  // ==========================================
 
-    // ==========================================
-    // UPDATE COUNT
-    // ==========================================
+  memoryCount.textContent = `${memories.length} ${
+    memories.length === 1 ? "memory" : "memories"
+  }`;
 
-    memoryCount.textContent =
-        `${memories.length} ${
-            memories.length === 1
-                ? "memory"
-                : "memories"
-        }`;
+  // ==========================================
+  // NO MEMORIES
+  // ==========================================
 
-
-    // ==========================================
-    // NO MEMORIES
-    // ==========================================
-
-    if (memories.length === 0) {
-
-        memoryList.innerHTML = `
+  if (memories.length === 0) {
+    memoryList.innerHTML = `
             <div class="empty-memory">
 
                 <div class="empty-icon">
@@ -404,31 +308,27 @@ function renderMemories() {
             </div>
         `;
 
-        return;
-    }
+    return;
+  }
 
+  // ==========================================
+  // CLEAR LIST
+  // ==========================================
 
-    // ==========================================
-    // CLEAR LIST
-    // ==========================================
+  memoryList.innerHTML = "";
 
-    memoryList.innerHTML = "";
+  // ==========================================
+  // CREATE CARDS
+  // ==========================================
 
+  memories.forEach((memory) => {
+    const card = document.createElement("div");
 
-    // ==========================================
-    // CREATE CARDS
-    // ==========================================
+    card.className = "memory-card";
 
-    memories.forEach((memory) => {
+    card.dataset.id = memory._id;
 
-        const card = document.createElement("div");
-
-        card.className = "memory-card";
-
-        card.dataset.id = memory._id;
-
-
-        card.innerHTML = `
+    card.innerHTML = `
 
             <div class="memory-details">
 
@@ -466,43 +366,52 @@ function renderMemories() {
 
         `;
 
-
-        memoryList.appendChild(card);
-
-    });
-
+    memoryList.appendChild(card);
+  });
 }
-
 
 // ==========================================
 // ESCAPE HTML
 // ==========================================
 
 function escapeHTML(text) {
+  const div = document.createElement("div");
 
-    const div = document.createElement("div");
+  div.textContent = text ?? "";
 
-    div.textContent = text ?? "";
-
-    return div.innerHTML;
-
+  return div.innerHTML;
 }
-
 
 // ==========================================
 // CLOSE MODAL WITH ESC
 // ==========================================
 
 document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") {
+    return;
+  }
 
-    if (event.key !== "Escape") {
-        return;
-    }
-
-    if (!memoryModal.classList.contains("hidden")) {
-
-        closeModal();
-
-    }
-
+  if (!memoryModal.classList.contains("hidden")) {
+    closeModal();
+  }
 });
+
+// ==========================================
+// MOBILE SIDEBAR
+// ==========================================
+
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.querySelector(".sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+if (menuBtn && sidebar && sidebarOverlay) {
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("open");
+    sidebarOverlay.classList.add("show");
+  });
+
+  sidebarOverlay.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    sidebarOverlay.classList.remove("show");
+  });
+}
