@@ -683,3 +683,16 @@ function scrollToBottom() {
     behavior: "smooth",
   });
 }
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.querySelector(".sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("show");
+});
+
+sidebarOverlay.addEventListener("click", () => {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
+});
