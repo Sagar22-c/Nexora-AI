@@ -538,7 +538,7 @@ export const askAI = async (messages, memories = []) => {
           ...messages,
         ],
 
-        max_tokens: 500,
+        max_tokens: 2048,
 
         temperature: 0.7,
 
@@ -1037,7 +1037,7 @@ export const askAIStream = async (messages, memories = []) => {
           ...messages,
         ],
 
-        max_tokens: 500,
+        max_tokens: 2048,
 
         temperature: 0.7,
 
